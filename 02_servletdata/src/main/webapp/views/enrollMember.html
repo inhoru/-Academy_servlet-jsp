@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<form action="/02_servletdata/enrollMember.do" method="post">
+	<ul>
+		<li><label for="">아이디 <input type="text" name="id"></label>
+		</li>
+		<li><label for="">패스워드 <input type="password"
+				name="password"></label></li>
+		<li><label for="">이름 <input type="text" name="name"></label>
+		</li>
+		<li><label for="">닉네임 <input type="text" name="nickname"></label>
+		</li>
+		<li><label for="">이메일 <input type="text" name="email"></label>
+		</li>
+		<li>취미 <label for=""><input type="checkbox" name="hobby"
+				value="운동">운동</label> <label for=""><input type="checkbox"
+				name="hobby" value="독서">독서</label> <label for=""><input
+				type="checkbox" name="hobby" value="게임">게임</label> <label for=""><input
+				type="checkbox" name="hobby" value="영화">영화</label>
+		</li>
+		<li>혼인여부 <label for=""><input type="radio"
+				name="marriage" value="혼인">혼인</label> <label for=""><input
+				type="radio" name="marriage" value="비혼">비혼</label>
+		</li>
+		<li><textarea name="info" cols="50" rows="10"></textarea></li>
+	</ul>
+	<input type="submit" value="제출">
+	<input type="reset" value="취소">
+	</form>
+
+</body>
+
+</html>
