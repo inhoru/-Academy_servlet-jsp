@@ -151,6 +151,12 @@
 		서블릿에러</a>
 	</h3>
 	
+	<h3>
+	<!-- 서블릿에요청 -->
+		<a href="<%=request.getContextPath()%>/memberAll.do">
+			회원정보조회
+		</a>
+	</h3>
 
 
 </body>
