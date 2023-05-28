@@ -36,6 +36,8 @@ public class MemberCheckServlet extends HttpServlet {
 		
 	String userId=request.getParameter("userId");
 	String password=request.getParameter("password");
+	HttpSession session2=request.getSession(true);
+	session2.setAttribute("userId", userId);
 	
 	//아이디저장 로직처리
 	

@@ -86,7 +86,43 @@ public class MemberDao {
 		}
 		return m;
 	}
-	
+	public int memberUpdate(Connection conn, MemberDTO m) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("memberUpdate"));
+			pstmt.setString(1, m.getPassword());
+			pstmt.setString(2, m.getUserName());
+			pstmt.setInt(3, m.getAge());
+			pstmt.setString(4, m.getEmail());
+			pstmt.setString(5, m.getPhone());
+			pstmt.setString(6, m.getAddress());
+			pstmt.setString(7, String.valueOf(m.getGender()));
+			pstmt.setString(8, String.join(",",m.getHobby()));
+			pstmt.setString(9, m.getUserId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	public int updatePasswordEnd(Connection conn, MemberDTO m,String password_new) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updatePasswordEnd"));
+			pstmt.setString(1,password_new);
+			pstmt.setString(2, m.getUserId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 		
 		private MemberDTO getMember(ResultSet rs) throws SQLException{
 			return MemberDTO.builder()

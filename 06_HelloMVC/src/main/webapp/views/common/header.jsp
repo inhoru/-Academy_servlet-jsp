@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.web.member.model.dto.MemberDTO"%>
+
 <%
 MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
 Cookie[] cookies = request.getCookies();
@@ -13,6 +14,7 @@ if (cookies != null) {
 		}
 	}
 }
+
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +62,7 @@ if (cookies != null) {
 						<td colspan="2"><%=loginMember.getUserName()%>님, 안녕하시지~ :)</td>
 					</tr>
 					<tr>
-						<td><input type="button" value="내 정보 보기"></td>
+						<td><input type="button" value="내 정보 보기" onclick="location.assign('<%=request.getContextPath() %>/member/memberView.do')"></td>
 						<td><input type="button" value="로그아웃"
 							onclick="location.replace('<%=request.getContextPath()%>/logout.do')">
 

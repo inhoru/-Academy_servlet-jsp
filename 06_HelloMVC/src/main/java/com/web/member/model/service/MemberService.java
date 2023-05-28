@@ -37,4 +37,21 @@ public class MemberService {
 		close(conn);
 		return m;
 	}
+	public int memberUpdate(MemberDTO m) {
+		Connection conn=getConnection();
+		int result =dao.memberUpdate(conn,m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	public int updatePasswordEnd(MemberDTO m,String password_new) {
+		Connection conn=getConnection();
+		int result =dao.updatePasswordEnd(conn,m,password_new);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 }
+	
