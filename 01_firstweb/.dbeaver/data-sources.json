@@ -21,7 +21,7 @@
 				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-188516a9ddc-546415b68526b850": {
+		"oracle_thin-1885d21869c-7173003f3589377a": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
 			"name": "DBA",
@@ -32,7 +32,7 @@
 				"database": "XE",
 				"url": "jdbc:oracle:thin:@localhost:1521:XE",
 				"configurationType": "MANUAL",
-				"home": "C:\\app\\GDC10\\product\\18.0.0\\dbhomeXE",
+				"home": "C:\\app\\inho\\product\\18.0.0\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-connection-type@": "BASIC",
@@ -41,10 +41,10 @@
 				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-188516f4c27-185244de0eb4c06e": {
+		"oracle_thin-1885d24bb94-433c7524f112c379": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "WEB",
+			"name": "web",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",
@@ -52,7 +52,7 @@
 				"database": "XE",
 				"url": "jdbc:oracle:thin:@localhost:1521:XE",
 				"configurationType": "MANUAL",
-				"home": "C:\\app\\GDC10\\product\\18.0.0\\dbhomeXE",
+				"home": "C:\\app\\inho\\product\\18.0.0\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-connection-type@": "BASIC",

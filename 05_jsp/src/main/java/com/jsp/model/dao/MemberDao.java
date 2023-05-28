@@ -32,7 +32,7 @@ public class MemberDao {
 						.address(rs.getString("address"))
 						.hobby(rs.getString("hobby"))
 						.enrollDate(rs.getDate("enroll_date"))
-						.build();
+						.build();                                                                                                                                       
 				list.add(m);
 			}
 		}catch(SQLException e) {

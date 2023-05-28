@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,com.jsp.model.dto.MemberDTO" %>    
 <%
-	List<MemberDTO> members=(List)request.getAttribute("list");
+	List<MemberDTO> members =(List)request.getAttribute("list");
 %>    
 <!DOCTYPE html>
 <html>

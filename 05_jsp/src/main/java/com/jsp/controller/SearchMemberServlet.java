@@ -42,7 +42,7 @@ public class SearchMemberServlet extends HttpServlet {
 		request.setAttribute("list", list);
 		
 		//4. 화면설정
-		request.getRequestDispatcher("/views/searchMember.jsp")
+		request.getRequestDispatcher("/views/searchmember.jsp")
 		.forward(request, response);
 		
 	

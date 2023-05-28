@@ -13,8 +13,8 @@
 <body>
 	<h3>회원조회결과</h3>
 	<div id="serachcontainer">
-		<form action="<%=request.getContextPath()%>/searchMember.do"">
-			<input type="text" name="keyname" placeholder="검색할 이름을 작성하세요.">
+		<form action="<%=request.getContextPath()%>/searchMember.do">
+			<input type="text" name="keyword" placeholder="검색할 이름을 작성하세요.">
 			<input type="submit" name="검색">
 		</form>
 	</div>
@@ -37,13 +37,13 @@
 					<td colspan="10"> 조회된 회원이 없습니다.</td>	
 			    </tr>
 			    <%}else{ 
-			    	for(MemberDTO m:members){
+			    	for(MemberDTO m : members){
 			    %>
 			    
 			    <tr>
 			    	<td><%=m.getMemberId() %></td>
 			    	<td><%=m.getMemberPwd() %></td>
-			    	<td><%=m.getMemberNmae() %></td>
+			    	<td><%=m.getMemberName() %></td>
 			    	<td><%=m.getAge() %></td>
 			    	<td><%=m.getGender() %></td>
 			    	<td><%=m.getEmail() %></td>
