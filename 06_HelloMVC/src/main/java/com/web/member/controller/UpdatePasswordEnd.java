@@ -38,14 +38,14 @@ public class UpdatePasswordEnd extends HttpServlet {
 		MemberDTO m=MemberDTO.builder().userId(userId).build();
 		
 		int result=new MemberService().updatePasswordEnd(m,password_new);
-//		String msg="",loc="";
-//		if(result>0) {
-//			msg="비밀번호가 변경되었습니다.";
-//			loc="/member/memberView.do";		
-//		}else {
-//			msg="현재비밀번호가 틀립니다.";
-//			loc="/member/updatePasswordEnd.do";		
-//		}
+		String msg="",loc="";
+		if(result>0) {
+			msg="비밀번호가 변경되었습니다.";
+			loc="/member/memberView.do";		
+		}else {
+			msg="현재비밀번호가 틀립니다.";
+			loc="/member/updatePasswordEnd.do";		
+		}
 		
 		request.getRequestDispatcher("/views/member/updatePasswordEnd.jsp").forward(request, response);
 	}

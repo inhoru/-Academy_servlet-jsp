@@ -52,14 +52,14 @@ public class MemberUpdateEndServelt extends HttpServlet {
 				.address(address)
 				.hobby(hobbies)
 				.build();
-		HttpSession updateMember=request.getSession(true);
-		updateMember.setAttribute("updateMember",m);
 		int result=new MemberService().memberUpdate(m);
 		
 		String msg="",loc="";
 		if(result>0) {
 			msg="정보수정이 완료되었습니다.";
 			loc="/";		
+			HttpSession session=request.getSession();
+			session.setAttribute("loginMember", new MemberService().selectByUserId(m.getUserId()));
 		}else {
 			msg="정보수정에 실패하였습니다.";
 			loc="/member/memberUpdate.do";		

@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<%
-HttpSession updateMember=request.getSession(true);
-MemberDTO m=(MemberDTO)updateMember.getAttribute("updateMember");
-%>
+	
 
 <section id=enroll-container>
 	<h2>회원 정보 수정</h2>
@@ -25,28 +22,28 @@ MemberDTO m=(MemberDTO)updateMember.getAttribute("updateMember");
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="userName" id="userName" value="" required><br>
+				<td><input type="text" name="userName" id="userName" value="<%=loginMember.getUserName()%>" required><br>
 				</td>
 			</tr>
 			<tr>
 				<th>나이</th>
-				<td><input type="number" name="age" id="age" value=""><br>
+				<td><input type="number" name="age" id="age" value="<%=loginMember.getAge()%>"><br>
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 				<td><input type="email" placeholder="abc@xyz.com" name="email"
-					id="email" value=""><br></td>
+					id="email" value="<%=loginMember.getEmail()%>"><br></td>
 			</tr>
 			<tr>
 				<th>휴대폰</th>
 				<td><input type="tel" placeholder="(-없이)01012345678"
-					name="phone" id="phone" maxlength="11" value=""><br></td>
+					name="phone" id="phone" maxlength="11" value="<%=loginMember.getPhone()%>"><br></td>
 			</tr>
 			<tr>
 				<th>주소</th>
 				<td><input type="text" placeholder="" name="address"
-					id="address" value=""><br></td>
+					id="address" value="<%=loginMember.getAddress()%>"><br></td>
 			</tr>
 			<tr>
 				<th>성별</th>
