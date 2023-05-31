@@ -25,4 +25,12 @@ public class AdminService {
 		close(conn);
 		return result;
 	}
+	
+	public List<Member> searchBykeyword(String keyword, String type){
+		Connection conn=getConnection();
+		List<Member> list=dao.searchBykeyword(conn,keyword,type);
+		close(conn);
+		return list;
+		
+	}
 }

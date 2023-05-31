@@ -66,5 +66,23 @@ public class AdminDao {
 		}
 		return result;
 	}
+	public List<Member> searchBykeyword(Connection conn , String keyword, String type){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Member> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchBykeyword").replace("#COL", type));
+			pstmt.setString(1, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			while(rs.next()) {				
+				list.add(getMember(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
 
 }
