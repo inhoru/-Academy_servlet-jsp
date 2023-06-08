@@ -1,4 +1,4 @@
-package com.web.notice.controller;
+package com.web.board.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.web.notice.model.service.NoticeService;
-import com.web.notice.model.vo.Notice;
+import com.web.board.model.service.BoardService;
+import com.web.board.model.vo.Board;
 
 /**
- * Servlet implementation class NoticeListServlet
+ * Servlet implementation class BoardListServlet
  */
-@WebServlet("/notice/noticeList.do")
-public class NoticeListServlet extends HttpServlet {
+@WebServlet("/board/boardList.do")
+public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListServlet() {
+    public BoardListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +31,6 @@ public class NoticeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int cPage,numPerpage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
@@ -43,43 +42,39 @@ public class NoticeListServlet extends HttpServlet {
 		}catch(NumberFormatException e) {
 			numPerpage=5;
 		}
-		String pageBar="";
-		int totalData=new NoticeService().selectNoticeCount();
+		int totalData=new BoardService().selectBoardCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		int pageBarSize=5;
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
+		String pageBar="";
 		
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?cPage="+(pageNo-1)
-			+"&numPerpage="+numPerpage+"'>[이전]</a>";
+			+"?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
 				pageBar+="<a href='"+request.getRequestURI()
-				+"?cPage="+pageNo
-				+"&numPerpage="+numPerpage+"'>"+pageNo+"</a>";
+					+"?cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
+			
 		}
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURI()
-			+"?cPage="+pageNo
-			+"&numPerpage="+numPerpage+"'>[다음]</a>";
-		}
+				+"?cPage="+pageNo+"'>[다음]</a>";
+		}	
 		request.setAttribute("pageBar", pageBar);
-		List<Notice> list=new NoticeService().selectNotice(cPage,numPerpage);
-		request.setAttribute("notices", list);
-		
-		request.getRequestDispatcher("/views/notice/noticeList.jsp")
-		.forward(request, response);
+		List<Board> list=new BoardService().selectBoard(cPage,numPerpage);
+		request.setAttribute("Boards", list);
+		request.getRequestDispatcher("/views/board/boardList.jsp").forward(request, response);
 	}
 
 	/**

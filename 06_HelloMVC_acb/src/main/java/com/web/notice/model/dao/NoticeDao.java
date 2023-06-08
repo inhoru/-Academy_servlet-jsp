@@ -1,8 +1,9 @@
 package com.web.notice.model.dao;
 
+import static com.web.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.ClosedDirectoryStreamException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Properties;
 
 import com.web.notice.model.vo.Notice;
-import static com.web.common.JDBCTemplate.close;
 
 public class NoticeDao {
 
