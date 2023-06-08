@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class NoticeDetailsServlet
+ * Servlet implementation class NoticeWritingServlet
  */
-@WebServlet("/notice/details.do")
-public class NoticeDetailsServlet extends HttpServlet {
+@WebServlet("/notice/insertForm.do")
+public class NoticeInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDetailsServlet() {
+    public NoticeInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class NoticeDetailsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/notice/details.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/notice/insertNotice.jsp").forward(request, response);
 	}
 
 	/**

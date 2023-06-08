@@ -17,7 +17,7 @@ import com.web.member.model.vo.Member;
 /**
  * Servlet Filter implementation class Check
  */
-@WebFilter("/admin/*")
+@WebFilter(urlPatterns = {"/admin/*","/notice/insertForm.do"})
 public class AdminCheckFilter extends HttpFilter implements Filter {
        
     /**

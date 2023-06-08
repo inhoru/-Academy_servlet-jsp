@@ -66,23 +66,50 @@ public class AdminDao {
 		}
 		return result;
 	}
-	public List<Member> searchBykeyword(Connection conn , String keyword, String type){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<Member> list=new ArrayList();
+
+	public List<Member> searchBykeyword(Connection conn, String keyword, String type, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Member> list = new ArrayList();
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("searchBykeyword").replace("#COL", type));
-			pstmt.setString(1, "%"+keyword+"%");
-			rs=pstmt.executeQuery();
-			while(rs.next()) {				
+			pstmt = conn.prepareStatement(sql.getProperty("searchBykeyword").replace("#COL", type));
+			pstmt.setString(1, type.equals("gender")?keyword
+					:"%"+keyword+"%");
+			pstmt.setInt(2, (cPage - 1) * numPerPage+1);
+			pstmt.setInt(3, cPage * numPerPage);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
 				list.add(getMember(rs));
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rs);
 			close(pstmt);
-		}return list;
+		}
+		return list;
+	}
+
+	public int selectMemberByKeywordCount(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectMemberByKeywordCount").replace("#COL", type));
+			pstmt.setString(1, type.equals("gender")?keyword
+					:"%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+
 	}
 
 }

@@ -26,11 +26,18 @@ public class AdminService {
 		return result;
 	}
 	
-	public List<Member> searchBykeyword(String keyword, String type){
+	public List<Member> searchBykeyword(String keyword, String type, int cPage,int numPerPage){
 		Connection conn=getConnection();
-		List<Member> list=dao.searchBykeyword(conn,keyword,type);
+		List<Member> list=dao.searchBykeyword(conn,keyword,type,cPage,numPerPage);
 		close(conn);
 		return list;
 		
+	}
+	
+	public int selectMemberByKeywordCount(String type, String keyword) {
+		Connection conn=getConnection();
+		int count=dao.selectMemberByKeywordCount(conn,type,keyword);
+		close(conn);
+		return count;
 	}
 }
