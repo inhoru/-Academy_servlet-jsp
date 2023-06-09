@@ -36,7 +36,7 @@
 </style>
 <script>
 function dateForm(e) {
-    const content = document.getElementsByName("noticeContent")[0].value;
+    const content = document.getElementsByName("boardContent")[0].value;
     if (content == "") {
         alert("내용을 입력해주세요.");
         return false;
@@ -47,7 +47,7 @@ function dateForm(e) {
 
 	<div id='board-container'>
 		<h2>게시판 작성</h2>
-		<form action='' onsubmit="return dateForm();" method="post" enctype="multipart/form-data">
+		<form action="<%=request.getContextPath()%>/board/insetBoard.do" onsubmit="return dateForm();" method="post" enctype="multipart/form-data">
 			<table id='tbl-board'>
 				<tr>
 					<th>제목</th>
@@ -63,7 +63,7 @@ function dateForm(e) {
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea cols="42" rows="5" name="noticeContent" ></textarea></td>
+					<td><textarea cols="42" rows="5" name="boardContent" ></textarea></td>
 				</tr>
 				<tr>
 					<th colspan="2">

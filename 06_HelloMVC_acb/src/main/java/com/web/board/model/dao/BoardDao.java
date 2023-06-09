@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.Properties;
 
 import com.web.board.model.vo.Board;
-import com.web.notice.model.dao.NoticeDao;
-import com.web.notice.model.vo.Notice;
+import com.web.board.model.vo.BoardComment;
 
 public class BoardDao {
 	
 	private Properties sql = new Properties();
 	
-	public BoardDao() {
+	public  BoardDao() {
 		String path = BoardDao.class.getResource("/sql/board/boardsql.properties").getPath();
 		try {
 			sql.load(new FileReader(path));
@@ -34,6 +33,17 @@ public class BoardDao {
 				.boardNo(rs.getInt("board_no")).boardOriginalFilename(rs.getString("board_original_filename"))
 				.boardReadcount(rs.getInt("board_readcount")).boardRenamedFilename(rs.getString("board_renamed_filename"))
 				.boardTitle(rs.getString("board_title")).boardWriter(rs.getString("board_writer"))
+				.build();
+	}
+	private BoardComment getBoardComment(ResultSet rs) throws SQLException{
+		return BoardComment.builder()
+				.boardCommentNo(rs.getInt("board_comment_no"))
+				.level(rs.getInt("board_comment_level"))
+				.boardCommentWriter(rs.getString("board_comment_writer"))
+				.boardCommentContent(rs.getString("board_comment_content"))
+				.boardCommentDate(rs.getDate("board_comment_date"))
+				.boardCommentRef(rs.getInt("board_comment_ref"))
+				.boardRef(rs.getInt("board_ref"))
 				.build();
 	}
 	public List<Board> selectBoard(Connection conn, int cPage, int numPerpage) {
@@ -91,5 +101,77 @@ public class BoardDao {
 		}
 		return n;
 	}
+	public List<BoardComment> selectBoardCommentByNo(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<BoardComment> list = new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoardCommentByNo"));
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				list.add(getBoardComment(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	
+	
+	
+	public int updateBoardReadCount(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateboardReadCount"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public int insertBoard(Connection conn, Board n) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertBoard"));
+			pstmt.setString(1, n.getBoardTitle());
+			pstmt.setString(2, n.getBoardWriter());
+			pstmt.setString(3, n.getBoardContent());
+			pstmt.setString(4, n.getBoardRenamedFilename());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 
+			close(pstmt);
+		}
+		return result;
+	}
+	public int insertBoardComment(Connection conn, BoardComment bc) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertBoardComment"));
+			pstmt.setInt(1, bc.getLevel());
+			pstmt.setString(2, bc.getBoardCommentWriter());
+			pstmt.setString(3, bc.getBoardCommentContent());
+			pstmt.setInt(4, bc.getBoardRef());
+			pstmt.setString(5, bc.getBoardCommentRef()==0?null:String.valueOf(bc.getBoardCommentRef()));
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

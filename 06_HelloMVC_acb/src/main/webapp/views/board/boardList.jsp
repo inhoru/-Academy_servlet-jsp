@@ -9,7 +9,7 @@
 		<h2>게시판 </h2>
 		<div>
 	<%if(loginMember!=null) {%>
-        	<button onclick="location.assign('<%=request.getContextPath()%>/board/insertBoard.do')">글쓰기</button>
+        	<button onclick="location.assign('<%=request.getContextPath()%>/board/insertForm.do')">글쓰기</button>
         	<%} %>
         </div>
 		<table id="tbl-board">

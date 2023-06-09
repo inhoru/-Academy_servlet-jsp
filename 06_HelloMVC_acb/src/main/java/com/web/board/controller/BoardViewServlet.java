@@ -1,15 +1,18 @@
 package com.web.board.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.web.board.model.service.BoardService;
 import com.web.board.model.vo.Board;
+import com.web.board.model.vo.BoardComment;
 
 /**
  * Servlet implementation class BoardViewServlet
@@ -30,8 +33,35 @@ public class BoardViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no=Integer.parseInt(request.getParameter("no"));
-		Board b=new BoardService().selectBoardByNo(no);
+		
+		int boardNo=Integer.parseInt(request.getParameter("no"));
+		
+		
+
+		//조회수 
+		Cookie[] cookies=request.getCookies();
+		String boardRead="";
+		boolean isRead=false;
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals("boardRead")) {
+					boardRead=c.getValue();
+					if(boardRead.contains("|"+boardNo+"|")) {
+						isRead=true;
+						break;
+					}
+				}
+			}
+		}
+		if(!isRead) {		
+		Cookie c=new Cookie("boardRead",boardRead+"|"+boardNo+"|");
+		c.setMaxAge(60*60*24);
+		response.addCookie(c);
+		}
+		Board b=new BoardService().selectBoardByNo(boardNo,isRead);
+		
+		List<BoardComment> comments=new BoardService().selectBoardCommentByNo(boardNo);
+		request.setAttribute("comments", comments);
 		request.setAttribute("board", b);
 		request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);
 	}
