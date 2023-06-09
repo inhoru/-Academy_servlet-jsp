@@ -31,6 +31,9 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
     table#tbl-comment tr.level2 td:first-of-type{padding-left:100px;}
     table#tbl-comment tr.level2 sub.comment-writer {color:#8e8eff; font-size:14px}
     table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
+    div.dowonload-container{
+    	cursor: pointer;
+    }
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
     table#tbl-comment button.btn-insert2{width:60px; height:23px; color:white; background:#3300ff; position:relative; top:-5px; left:10px;}
@@ -58,7 +61,12 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
 			<tr>
 				<th>첨부파일</th>
 				<td>
-				 
+				 	<%if(b.getBoardRenamedFilename()!=null) {%>
+           	<div class="dowonload-container" onclick="fileDownload('<%=b.getBoardRenamedFilename()%>');">
+           		<img src="<%=request.getContextPath()%>/images/file.png" width="20">
+           		<span><%=b.getBoardRenamedFilename() %></span>
+           		</div>
+           	<%} %>
 				</td>
 			</tr>
 			<tr>
@@ -117,5 +125,9 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
     			$("#userId").focus();
     		}
     	});
+    	const fileDownload=(filename)=>{
+    		location.assign("<%=request.getContextPath()%>/downloadFile.do?name="+filename)
+    		alert("파일다운로드");
+    	}    
     </script>
 <%@ include file="/views/common/footer.jsp"%>
