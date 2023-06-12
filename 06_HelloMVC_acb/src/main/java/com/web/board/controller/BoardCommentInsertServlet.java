@@ -33,8 +33,8 @@ public class BoardCommentInsertServlet extends HttpServlet {
 		BoardComment bc=BoardComment.builder()
 				.boardRef(Integer.parseInt(request.getParameter("boardRef")))
 				.level(Integer.parseInt(request.getParameter("level")))
-				.boardCommentContent(request.getParameter("content"))
 				.boardCommentWriter(request.getParameter("boardCommentWriter"))
+				.boardCommentContent(request.getParameter("content"))
 				.boardCommentRef(Integer.parseInt(request.getParameter("boardCommentRef")))
 				.build();
 					
@@ -51,6 +51,8 @@ public class BoardCommentInsertServlet extends HttpServlet {
 			request.getRequestDispatcher(view).forward(request,response);
 		}
 		
+	
+	
 	}
 
 	/**

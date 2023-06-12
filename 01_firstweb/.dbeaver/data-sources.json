@@ -41,10 +41,10 @@
 				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-1885d24bb94-433c7524f112c379": {
+		"oracle_thin-18898b93e7c-326273c1e7ca3339": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "web",
+			"name": "WEB",
 			"save-password": true,
 			"configuration": {
 				"host": "localhost",
@@ -52,7 +52,7 @@
 				"database": "XE",
 				"url": "jdbc:oracle:thin:@localhost:1521:XE",
 				"configurationType": "MANUAL",
-				"home": "C:\\app\\inho\\product\\18.0.0\\dbhomeXE",
+				"home": "C:\\app\\GDC10\\product\\18.0.0\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-connection-type@": "BASIC",

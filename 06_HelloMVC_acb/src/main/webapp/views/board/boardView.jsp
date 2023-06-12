@@ -22,18 +22,17 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
     table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
     table#tbl-comment button.btn-reply{display:none;}
     table#tbl-comment button.btn-delete{display:none;}
+    table#tbl-comment button.btn-update{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
     table#tbl-comment tr:hover button.btn-reply{display:inline;}
     table#tbl-comment tr:hover button.btn-delete{display:inline;}
+    table#tbl-comment tr:hover button.btn-update{display:inline;}
     table#tbl-comment tr.level2 {color:gray; font-size: 14px;}
     table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
     table#tbl-comment sub.comment-date {color:tomato; font-size:10px}
     table#tbl-comment tr.level2 td:first-of-type{padding-left:100px;}
     table#tbl-comment tr.level2 sub.comment-writer {color:#8e8eff; font-size:14px}
     table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
-    div.dowonload-container{
-    	cursor: pointer;
-    }
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
     table#tbl-comment button.btn-insert2{width:60px; height:23px; color:white; background:#3300ff; position:relative; top:-5px; left:10px;}
@@ -56,17 +55,12 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
 			</tr>
 			<tr>
 				<th>조회수</th>
-				<td><%=b.getBoardReadcount() %></td>
+				<td><%=b.getBoardReadcount()%></td>
 			</tr>
 			<tr>
 				<th>첨부파일</th>
 				<td>
-				 	<%if(b.getBoardRenamedFilename()!=null) {%>
-           	<div class="dowonload-container" onclick="fileDownload('<%=b.getBoardRenamedFilename()%>');">
-           		<img src="<%=request.getContextPath()%>/images/file.png" width="20">
-           		<span><%=b.getBoardRenamedFilename() %></span>
-           		</div>
-           	<%} %>
+				 
 				</td>
 			</tr>
 			<tr>
@@ -99,22 +93,36 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
 		</div>
 		<table id="tbl-comment">
 		<%if(comments!=null){ 
-			for(BoardComment bc:comments){%>
-			<tr class="level1">
-				<td>
-					<sub class="comment-writer"><%=bc.getBoardCommentWriter() %></sub>
-					<sub class="comment-date"><%=bc.getBoardCommentDate() %></sub>
-					<br>
-					<%=bc.getBoardCommentContent() %>
-				</td>
-				<td>
-					<button class="btn-reply">답글</button>
-					
-					<button class="btn-reply">수정</button>
-					<button class="btn-reply">삭제</button>
-				</td>
-			</tr>
-			<%} %>
+			for(BoardComment bc:comments){
+			if(bc.getLevel()==1){%>
+				<tr class="level1">
+					<td>
+						<sub class="comment-writer"><%=bc.getBoardCommentWriter() %></sub>
+						<sub class="comment-date"><%=bc.getBoardCommentDate() %></sub>
+						<br>
+						<%=bc.getBoardCommentContent() %>
+					</td>
+					<td>
+					<%if(loginMember!=null){ %>
+						<button class="btn-reply" value="<%=bc.getBoardCommentNo() %>">답글</button>
+						
+						<button class="btn-update">수정</button>
+						<button class="btn-delete">삭제</button>
+						<%} %>
+					</td>
+				</tr>
+			<%}else{%> 
+				<tr class="level2">
+					<td>
+						<sub class="comment-writer"><%=bc.getBoardCommentWriter() %></sub>
+						<sub class="comment-date"><%=bc.getBoardCommentDate() %></sub>
+						<br>
+						<%=bc.getBoardCommentContent() %>
+					</td>
+					<td></td>
+				</tr>
+			<%}
+			}%>
 		<%} %>
 		</table>   
     </section>
@@ -125,9 +133,31 @@ java.util.List,com.web.board.model.vo.BoardComment" %>
     			$("#userId").focus();
     		}
     	});
-    	const fileDownload=(filename)=>{
-    		location.assign("<%=request.getContextPath()%>/downloadFile.do?name="+filename)
-    		alert("파일다운로드");
-    	}    
+    	
+    	$(".btn-reply").click(e=>{
+    		const tr=$("<tr>");
+    		const td=$("<td>").attr("colspan","2");
+    		const boardCommentRef=$(e.target).val();
+    		
+    		const form=$(".comment-editor>form").clone();
+    		form.find("textarea").attr("rows","1");
+    		form.find("input[name=level]").val("2");
+    		form.find("input[name=boardCommentRef]").val(boardCommentRef);
+    		td.append(form);
+    		tr.append(td);
+    		td.css("display","none");
+    		
+    		tr.insertAfter($(e.target).parents("tr")).children("td").slideDown(800);
+    		$(e.target).off("click");	
+    	});
     </script>
 <%@ include file="/views/common/footer.jsp"%>
+
+
+
+
+
+
+
+
+

@@ -19,4 +19,5 @@ public class BoardComment {
 	private Date boardCommentDate;
 	private int boardCommentRef;
 	private int boardRef;
+	
 }

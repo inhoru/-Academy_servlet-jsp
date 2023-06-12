@@ -67,7 +67,7 @@ public class BoardService {
 	}
 	public List<BoardComment> selectBoardCommentByNo(int no) {
 		Connection conn=getConnection();
-		List<BoardComment> bcm=dao.selectBoardCommentByNo(conn,no);
+		List<BoardComment> bcm=dao.selectBoardComment(conn,no);
 		close(conn);
 		return bcm;
 	}
