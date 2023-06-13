@@ -177,6 +177,103 @@
 			});
 		});
 	</script>
+	<h2>html페이지를 받아서 처리하기</h2>
+	<button id="btnhtml">html페이지 받아오기</button>
+	<div id="htmlcontainer"></div>
+	<script>
+		$("#btnhtml").click(e=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/ajax/htmltTest.do",
+				dataType:"html",/*안써두됨*/
+				success:data=>{
+					console.log(data);
+					$("#htmlcontainer").html(data);
+				}
+			})
+		})
+	</script>
+	
+	<h2>xml파일을 가져와 처리하기</h2>
+	<button id="xmlbtn">xml파일가져오기</button>
+	<div id="xmlcontainer"></div>
+	<script>
+		$("#xmlbtn").click(e=>{
+			$.get("<%=request.getContextPath()%>/test/books.xml",
+			function(data){
+				//console.log($(data));
+				const root=$(data).find(":root");
+				console.log(root);
+				const books=root.children();
+				console.log(books);
+				const table=$("<table>");
+				const header="<tr><th>구분</th></th>제목</th><th>작가</th></tr>"
+				table.html(header);
+				books.each(function(i,e){
+					const tr=$("<tr>");
+					const subject=$("<td>").text($(e).find("submit").text());
+					const title=$("<td>").text($(e).find("title").text());
+					const writer=$("<td>").text($(e).find("writer").text());
+					tr.append(subject).append(title).append(writer);
+					table.append(tr)
+					
+				});
+				$("#xmlcontainer").html(table);
+							
+			}
+		);
+	})
+	</script>
+	
+	<!-- 검색창 -->
+	<h2>서버에서 보낸 데이터 활용하기</h2>
+	<input type="search" id="userId" list="data">
+	<button id="searchMember">아이디검색</button>
+	<datalist id="data"></datalist>
+	<div id="memberList"></div>
+	<script>
+		$("#userId").keyup(e=>{
+			$.get("<%=request.getContextPath()%>/searchId.do?id="+$(e.target).val(),
+					function(data){
+				$("#data").html('');
+				const userIds=data.split(",");
+				userIds.forEach(e=>{
+					const option=$("<option>").attr("value",e).text(e);
+					$("#data").append(option);
+				})
+			})
+		})
+		$("#searchMember").click(e=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/searchAll.do",
+				dataType:"html",
+				success:data=>{
+					/* console.log(data); */
+					const membersAll=data.split("\n");
+					const table=$("<table>");
+					const header=$("<tr>");
+					const headerdata=["아이디","이름","나이","성별","이메일","전화번호","주소","취미","가입일"];
+					headerdata.forEach(e=>{
+						const th=$("<th>").text(e);
+						header.append(th);
+					});
+					table.append(header);
+					membersAll.forEach(e=>{
+						const member=e.split("$");
+						const tr=$("<tr>");
+						member.forEach(m=>{
+							tr.append($("<td>").text(m));
+						});
+						table.append(tr);
+						
+					});
+						$("#memberList").html(table);;
+				/* 	$("#memberList").html(data); */
+				}
+			})
+		})
+		
+	</script>
+	
 	
 	
 	

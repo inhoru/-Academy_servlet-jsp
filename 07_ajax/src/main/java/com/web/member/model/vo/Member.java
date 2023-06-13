@@ -26,8 +26,10 @@ public class Member {
 	private Date enrollDate;
 	
 	
-	
-	
+	@Override
+	public String toString() {
+		return userId+"$"+userName+"$"+age+"$"+gender+"$"+email+"$"+phone+"$"+address+"$"+Arrays.toString(hobby)+"$"+new SimpleDateFormat("yyyy-mm-dd").format(enrollDate);
+	}
 }
 
 
